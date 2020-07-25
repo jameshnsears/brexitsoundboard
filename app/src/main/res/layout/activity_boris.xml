@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="na.brexitsoundboard.BorisActivityAbstract">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:clipToPadding="true"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideInset"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonBoris350MillionPoundsAWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_350MillionPoundsAWeek" />
+
+            <Button
+                android:id="@+id/buttonBorisAbsurdToObey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_AbsurdToObey" />
+
+            <Button
+                android:id="@+id/buttonBorisAHistoricMistake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_AHistoricMistake" />
+
+            <Button
+                android:id="@+id/buttonBorisAllYourOptionsAreGood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_AllYourOptionsAreGood" />
+
+            <Button
+                android:id="@+id/buttonBorisAsLongAsItTakes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_AsLongAsItTakes" />
+
+            <Button
+                android:id="@+id/buttonBorisBrexitHasNotDamagedCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_BrexitHasNotDamagedCountry" />
+
+            <Button
+                android:id="@+id/buttonBorisConfidenceAndZap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_ConfidenceAndZap" />
+
+            <Button
+                android:id="@+id/buttonBorisCostOfGettingOutVirtuallyNil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_CostOfGettingOutVirtuallyNil" />
+
+            <Button
+                android:id="@+id/buttonBorisDoggerLand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_Doggerland" />
+
+            <Button
+                android:id="@+id/buttonBorisDoNotUnderestimate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_DoNotUnderestimate" />
+
+            <Button
+                android:id="@+id/buttonBorisGoWhistle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_GoWhistle" />
+
+            <Button
+                android:id="@+id/buttonBorisHiggeldyPiggeldyNations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_HiggeldyPiggeldyNations" />
+
+            <Button
+                android:id="@+id/buttonBorisLittleBenefitFromEU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_LittleBenefitFromEU" />
+
+            <Button
+                android:id="@+id/buttonBorisMeetOurObligations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_MeetOurObligations" />
+
+            <Button
+                android:id="@+id/buttonBorisNotAPlagueOfBoils"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_NotAPlagueOfBoils" />
+
+            <Button
+                android:id="@+id/buttonBorisNotPayingIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_NotPayingIn" />
+
+            <Button
+                android:id="@+id/buttonBorisNotSpam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_NotAboutSpamAndCabbage" />
+
+            <Button
+                android:id="@+id/buttonBorisPoundIsStable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_PoundIsStable" />
+
+            <Button
+                android:id="@+id/buttonBorisRightsCompletelyProtected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_RightsCompletelyProtected" />
+
+            <Button
+                android:id="@+id/buttonBorisTalkingWithoutDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_TalkingWithoutDetail" />
+
+            <Button
+                android:id="@+id/buttonBorisTigerIntheTank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_TigerInTheTank" />
+
+            <Button
+                android:id="@+id/buttonBorisUkShapingTheModernWorld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_UkShapingTheModernWorld" />
+
+            <Button
+                android:id="@+id/buttonBorisVindicatedByHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_VindicatedByHistory" />
+
+            <Button
+                android:id="@+id/buttonBorisWeExportTvAerials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_WeExportTvAerials" />
+
+            <Button
+                android:id="@+id/buttonBorisWeWantToBeLessInsular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_WeWantToBeLessInsular" />
+
+            <Button
+                android:id="@+id/buttonBorisWeightLiftedFromBritishBusiness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_WeightLiftedFromBritishBusiness" />
+
+            <Button
+                android:id="@+id/buttonBorisWeWillContinueToBeEuropeans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_WeWillContinueToBeEuropeans" />
+
+            <Button
+                android:id="@+id/buttonBorisWinWinForAllOfUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_WinWinForAllOfUs" />
+
+            <Button
+                android:id="@+id/buttonBorisUsaVeryEnthusiasticAboutFreeTradeDeal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_boris_UsaVeryEnthusiasticAboutFreeTradeDeal" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,156 @@
+apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+
+// Firebase
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId 'na.brexitsoundboard'
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 10
+        versionName '7'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+    lintOptions {
+        // app/build/reports/lint-results.html
+        abortOnError false
+        warningsAsErrors false
+        xmlReport true
+        htmlReport true
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    productFlavors {
+    }
+    buildToolsVersion '28.0.3'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.4'
+
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
+
+task findbugs(type: FindBugs, group: 'verification', dependsOn: ['assembleDebug']) {
+    ignoreFailures = true
+    effort = 'max'
+    reportLevel = 'high'
+
+    classes = files("${project.projectDir}/build/intermediates/javac")
+    source = fileTree('src/main/java')
+    classpath = files()
+
+    excludeFilter = rootProject.file('findbugs-exclude.xml')
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml.destination = "$project.buildDir/reports/findbugs.xml"
+        html.destination = "$project.buildDir/reports/findbugs.html"
+    }
+}
+
+task pmd(type: Pmd, group: 'verification') {
+    ruleSetFiles = rootProject.files('pmd-ruleset.xml')
+
+    ignoreFailures = true
+    description 'Run pmd'
+    group 'verification'
+
+    ruleSets = []
+    source = fileTree('src/main/java')
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml.destination = "$project.buildDir/reports/pmd.xml"
+        html.destination = "$project.buildDir/reports/pmd.html"
+    }
+}
+
+task checkstyle(type: Checkstyle, group: 'verification') {
+    // app/build/reports/checkstyle
+    configFile = rootProject.file('checkstyle.xml')
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/test/**'
+    exclude '**/androidTest/**'
+    exclude '**/R.java'
+    exclude '**/BuildConfig.java'
+    classpath = files()
+}
+
+jacoco {
+    toolVersion = '0.8.2'
+}
+
+// dependsOn: ['testDebugUnitTest']
+// dependsOn: ['connectedAndroidTest']
+task jacocoReport(type: JacocoReport, group: 'verification') {
+    // app/build/reports/jacoco/jacocoTestReport/html/index.html
+    // app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      'android/**/*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/combined.exec',
+    ])
+}
+
+task jacocoMerge(type: JacocoMerge) {
+    destinationFile = file("$buildDir/jacoco/combined.exec")
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec',
+            'jacoco/coverage.ec'
+    ])
+}
+
+apply plugin: 'com.google.gms.google-services'
