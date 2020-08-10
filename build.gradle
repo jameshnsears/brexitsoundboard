@@ -1,20 +1,31 @@
 buildscript {
+    ext.kotlin_version = '1.3.72-release-Studio4.0-5'
+
     repositories {
         google()
         jcenter()
-        maven { url 'https://plugins.gradle.org/m2/' } // PMD; checkstyle; findbugs; jacoco
-        maven { url 'https://maven.fabric.io/public' } // Firebase
+        gradlePluginPortal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
-        classpath 'com.google.gms:google-services:4.2.0'
-        classpath 'org.jacoco:org.jacoco.core:0.8.2'
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.10.1'
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.11.0-RC1"
+        classpath "org.jacoco:org.jacoco.core:0.8.5"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0"
 
-        // Firebase
-        classpath 'com.google.firebase:firebase-plugins:1.1.5'
-        classpath 'io.fabric.tools:gradle:1.26.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.11.0-RC1")
 }
 
 allprojects {

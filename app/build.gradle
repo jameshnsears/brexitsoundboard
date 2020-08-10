@@ -1,156 +1,231 @@
 apply plugin: 'com.android.application'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
+apply plugin: 'kotlin-android'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+apply plugin: 'org.sonarqube'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: "io.gitlab.arturbosch.detekt"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
-// Firebase
-apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'io.fabric'
 
-android {
-    compileSdkVersion 28
-    defaultConfig {
-        applicationId 'na.brexitsoundboard'
-        minSdkVersion 23
-        targetSdkVersion 28
-        versionCode 10
-        versionName '7'
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-    lintOptions {
-        // app/build/reports/lint-results.html
-        abortOnError false
-        warningsAsErrors false
-        xmlReport true
-        htmlReport true
-    }
-    buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-    productFlavors {
-    }
-    buildToolsVersion '28.0.3'
-}
-
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
-    implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
-    implementation 'com.google.firebase:firebase-perf:16.2.3'
-
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.4'
-
-    androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-}
-
-task findbugs(type: FindBugs, group: 'verification', dependsOn: ['assembleDebug']) {
+task pmd(type: Pmd) {
     ignoreFailures = true
-    effort = 'max'
-    reportLevel = 'high'
+    consoleOutput = true
 
-    classes = files("${project.projectDir}/build/intermediates/javac")
-    source = fileTree('src/main/java')
-    classpath = files()
-
-    excludeFilter = rootProject.file('findbugs-exclude.xml')
-
-    reports {
-        xml.enabled = true
-        html.enabled = false
-        xml.destination = "$project.buildDir/reports/findbugs.xml"
-        html.destination = "$project.buildDir/reports/findbugs.html"
-    }
-}
-
-task pmd(type: Pmd, group: 'verification') {
-    ruleSetFiles = rootProject.files('pmd-ruleset.xml')
-
-    ignoreFailures = true
-    description 'Run pmd'
-    group 'verification'
-
-    ruleSets = []
-    source = fileTree('src/main/java')
-
-    reports {
-        xml.enabled = true
-        html.enabled = false
-        xml.destination = "$project.buildDir/reports/pmd.xml"
-        html.destination = "$project.buildDir/reports/pmd.html"
-    }
-}
-
-task checkstyle(type: Checkstyle, group: 'verification') {
-    // app/build/reports/checkstyle
-    configFile = rootProject.file('checkstyle.xml')
+    ruleSetFiles = files("${project.rootDir}/pmd-rules.xml")
 
     source 'src'
     include '**/*.java'
-    exclude '**/gen/**'
-    exclude '**/test/**'
-    exclude '**/androidTest/**'
-    exclude '**/R.java'
-    exclude '**/BuildConfig.java'
-    classpath = files()
+    reports {
+        xml.enabled = true
+        xml.destination = file("$project.buildDir/reports/pmd-results.xml")
+        html.enabled = true
+        html.destination = file("$project.buildDir/reports/pmd-results.html")
+    }
 }
 
 jacoco {
-    toolVersion = '0.8.2'
+    toolVersion = '0.8.5'
 }
 
-// dependsOn: ['testDebugUnitTest']
-// dependsOn: ['connectedAndroidTest']
-task jacocoReport(type: JacocoReport, group: 'verification') {
-    // app/build/reports/jacoco/jacocoTestReport/html/index.html
-    // app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+// , dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
+task jacocoReport(type: JacocoReport) {
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml {
+            enabled true
+            destination file("$project.buildDir/reports/jacoco-combined.xml")
+        }
+        html {
+            enabled true
+            destination file("$project.buildDir/reports/jacoco")
+        }
     }
 
-    def fileFilter = ['**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      '**/Manifest*.*',
-                      'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
+    def excludes = [
+            '**/R.class',
+            '**/R$*.class'
+    ]
 
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/combined.exec',
-    ])
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: excludes)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    getSourceDirectories().from(files([mainSrc]))
+    getClassDirectories().from(files([debugTree]))
+    getExecutionData().from(fileTree(dir: "$buildDir", includes:
+            ["jacoco/testDebugUnitTest.exec",
+             "outputs/code_coverage/debugAndroidTest/connected/*.ec"
+            ]))
 }
 
-task jacocoMerge(type: JacocoMerge) {
-    destinationFile = file("$buildDir/jacoco/combined.exec")
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec',
-            'jacoco/coverage.ec'
-    ])
+coveralls {
+    jacocoReportPath 'build/reports/jacoco-combined.xml'
 }
 
-apply plugin: 'com.google.gms.google-services'
+sonarqube {
+    properties {
+        def props = new Properties()
+        file("sonar-project.properties").withInputStream { props.load(it) }
+        props.each {
+            property("${it.key}", "${it.value}")
+        }
+    }
+}
+
+task espresso(type: Exec) {
+    commandLine 'adb', 'shell', 'settings', 'put', 'global', 'window_animation_scale', '0'
+    commandLine 'adb', 'shell', 'settings', 'put', 'global', 'transition_animation_scale', '0'
+    commandLine 'adb', 'shell', 'settings', 'put', 'global', 'animator_duration_scale', '0'
+}
+
+detekt {
+    detekt {
+        debug = true
+        ignoreFailures = false
+        failFast = false // fail build on any finding
+        buildUponDefaultConfig = true // preconfigure defaults
+        config = files("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+        parallel = true
+        reports {
+            html.enabled = true // observe findings in your browser with structure and code snippets
+            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+        }
+    }
+
+    ktlint {
+        debug = true
+        ignoreFailures = true
+        coloredOutput = false
+    }
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId 'na.brexitsoundboard'
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 20
+        versionName '1.1.0'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation": "$projectDir/schemas".toString(),
+                        "room.incremental": "true"
+                ]
+            }
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        animationsDisabled = true
+    }
+
+    lintOptions {
+        abortOnError false
+        warningsAsErrors false
+        checkAllWarnings = true
+        xmlReport true
+        htmlReport true
+    }
+
+    buildTypes {
+        def appcenterKeyProd = System.getenv("APPCENTER_KEY_PROD_BREXITSOUNDBOARD")
+        if (appcenterKeyProd == null) {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            appcenterKeyProd = properties.getProperty('APPCENTER_KEY_PROD_BREXITSOUNDBOARD')
+        }
+
+        def appcenterKeyDev = System.getenv("APPCENTER_KEY_DEV_BREXITSOUNDBOARD")
+        if (appcenterKeyDev == null) {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            appcenterKeyDev = properties.getProperty('APPCENTER_KEY_DEV_BREXITSOUNDBOARD')
+        }
+
+        def gitHash = { ->
+            def stdout = new ByteArrayOutputStream()
+            exec {
+                commandLine 'git', 'rev-parse', '--short', 'HEAD'
+                standardOutput = stdout
+            }
+            return stdout.toString().trim()
+        }
+
+        release {
+            buildConfigField("String", "APPCENTER_KEY", "\"$appcenterKeyProd\"")
+            buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+            buildConfigField("String", "APPCENTER_KEY", "\"$appcenterKeyDev\"")
+            buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    testOptions {
+        animationsDisabled true
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+               jacoco {
+                    includeNoLocationClasses = true
+                    excludes = ['jdk.internal.*']
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    def appCenterSdkVersion = '3.2.2'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation "io.mockk:mockk-android:1.10.0"
+    androidTestImplementation 'org.hamcrest:hamcrest-library:2.2'
+    androidTestImplementation 'org.mockito:mockito-core:3.4.6'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.work:work-runtime-ktx:2.4.0'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    implementation 'commons-io:commons-io:2.6'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation "io.mockk:mockk:1.10.0"
+    testImplementation 'junit:junit:4.13'
+    testImplementation 'org.mockito:mockito-core:3.4.6'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
