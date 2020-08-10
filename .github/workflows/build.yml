@@ -45,10 +45,10 @@ jobs:
           set -x
           ./gradlew coveralls
 
-       - name: codecov
-         run: |
-           set -x
-           bash <(curl -s https://codecov.io/bash)
+      - name: codecov
+        run: |
+          set -x
+          bash <(curl -s https://codecov.io/bash)
 
       - name: static analysis I
         run: |
