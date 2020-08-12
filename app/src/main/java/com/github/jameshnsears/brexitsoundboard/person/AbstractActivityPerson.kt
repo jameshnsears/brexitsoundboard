@@ -75,16 +75,12 @@ abstract class AbstractActivityPerson : AppCompatActivity(), View.OnClickListene
     }
 
     private fun soundPlay(rawSoundId: Int, nameOfSound: String) {
-        Timber.i(String.format("soundPlay: %s", nameOfSound))
+        Timber.d(String.format("soundPlay: %s", nameOfSound))
 
         auditEvent(AuditEventHelper.Event.SOUND, nameOfSound)
 
         mediaPlayerHelper.reset()
-        try {
-            mediaPlayerHelper.play(this, rawSoundId)
-        } catch (exception: NullPointerException) {
-            Timber.e(String.format("%s", exception.message))
-        }
+        mediaPlayerHelper.play(this, rawSoundId)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -103,7 +99,9 @@ abstract class AbstractActivityPerson : AppCompatActivity(), View.OnClickListene
             resources,
             baseContext,
             contentResolver,
-            resourceId, nameOfSound, mediaType
+            resourceId,
+            nameOfSound,
+            mediaType
         )
     }
 }

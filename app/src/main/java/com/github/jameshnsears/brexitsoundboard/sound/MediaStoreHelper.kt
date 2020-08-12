@@ -9,10 +9,10 @@ import android.provider.MediaStore
 import android.util.TypedValue
 import com.github.jameshnsears.brexitsoundboard.R
 import com.github.jameshnsears.brexitsoundboard.utils.ToastHelper.makeToast
-import java.io.File
-import java.io.FileOutputStream
 import org.apache.commons.io.IOUtils
 import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
 
 class MediaStoreHelper {
     fun installSound(
@@ -46,8 +46,8 @@ class MediaStoreHelper {
         }
     }
 
-    private fun getFileDestination(soundName: String): File {
-        val fileFolderDestination = File(Environment.getExternalStorageDirectory().absolutePath + "/Music")
+    fun getFileDestination(soundName: String): File {
+        val fileFolderDestination = getfileFolderDestination()
         if (!fileFolderDestination.exists()) {
             fileFolderDestination.mkdirs()
         }
@@ -56,8 +56,13 @@ class MediaStoreHelper {
         return fileDestination
     }
 
+    fun getfileFolderDestination(): File {
+        return File(Environment.getExternalStorageDirectory().absolutePath + "/Music")
+    }
+
     private fun getContentValues(soundName: String, mediaType: String, fileDestination: File): ContentValues {
         val contentValues = ContentValues()
+
         contentValues.put(MediaStore.MediaColumns.TITLE, soundName)
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3")
 

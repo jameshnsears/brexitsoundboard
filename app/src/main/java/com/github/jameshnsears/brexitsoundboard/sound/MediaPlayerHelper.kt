@@ -8,18 +8,14 @@ class MediaPlayerHelper {
     private var mediaPlayer: MediaPlayer? = null
 
     fun reset() {
-        try {
-            if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.stop()
-                mediaPlayer!!.release()
-            }
-        } catch (exception: IllegalStateException) {
-            Timber.e(String.format("%s", exception.message))
+        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+            mediaPlayer!!.stop()
+            mediaPlayer!!.release()
         }
     }
 
     fun play(activity: Activity?, rawSoundId: Int) {
-        Timber.i("playMediaFile")
+        Timber.d("playMediaFile")
         try {
             mediaPlayer = MediaPlayer.create(activity, rawSoundId)
             mediaPlayer?.start()

@@ -22,8 +22,8 @@ android {
         applicationId 'na.brexitsoundboard'
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 21
-        versionName '1.1.1'
+        versionCode 22
+        versionName '1.1.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
@@ -68,7 +68,8 @@ android {
             buildConfigField("String", "APPCENTER_KEY", "\"$appcenterKeyProd\"")
             buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
 
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -115,7 +116,7 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-core:3.4.6'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.work:work-runtime-ktx:2.4.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'

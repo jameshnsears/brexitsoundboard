@@ -41,8 +41,10 @@ class AuditEventHelper private constructor(application: Application) {
 
     init {
         AppCenter.start(
-            application, BuildConfig.APPCENTER_KEY,
-            Analytics::class.java, Crashes::class.java
+            application,
+            BuildConfig.APPCENTER_KEY,
+            Analytics::class.java,
+            Crashes::class.java
         )
     }
 }

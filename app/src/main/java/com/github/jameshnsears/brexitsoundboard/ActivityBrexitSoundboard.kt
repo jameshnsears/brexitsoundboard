@@ -27,7 +27,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     val buttonIdsBoris: MutableList<Int> = ArrayList()
     private val buttonIdsLiam: MutableList<Int> = ArrayList()
     private val buttonIdsDavid: MutableList<Int> = ArrayList()
-    private val buttonIdsTheresa: MutableList<Int> = ArrayList()
+    val buttonIdsTheresa: MutableList<Int> = ArrayList()
 
     private var imageButtonClickedOn: ImageButton? = null
     private var selectedButtonIdBoris = 0
@@ -83,7 +83,8 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     private fun setFooterVersion() {
         activityHomeBinding!!.textViewVersion.text = resources.getString(
             R.string.footer_version,
-            BuildConfig.VERSION_NAME, BuildConfig.GIT_HASH
+            BuildConfig.VERSION_NAME,
+            BuildConfig.GIT_HASH
         )
     }
 
@@ -271,7 +272,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
             }
         }
 
-        Timber.i(buttonType.toString())
+        Timber.d(buttonType.toString())
         return buttonType
     }
 

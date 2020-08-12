@@ -53,6 +53,7 @@ jobs:
       - name: static analysis - ktlint
         run: |
           set -x
+          # ./gradlew ktlintformat
           ./gradlew ktlint
 
       - name: static analysis - detekt

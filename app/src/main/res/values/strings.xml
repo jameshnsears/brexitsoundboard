@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Brexit Soundboard</string>
 
-    <string name="install_sound">Enable Alarm / Notification / Ringtone menu?</string>
+    <string name="install_sound">Enable Media Library integration?</string>
     <string name="install_menu_alarm">Alarm</string>
     <string name="install_menu_notification">Notification</string>
     <string name="install_menu_ringtone">Ringtone</string>

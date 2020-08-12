@@ -3,8 +3,8 @@ package com.github.jameshnsears.brexitsoundboard.audit
 import android.app.Application
 import io.mockk.every
 import io.mockk.mockkObject
-import java.util.concurrent.ConcurrentHashMap
 import org.junit.Test
+import java.util.concurrent.ConcurrentHashMap
 
 class AuditEventHelperTest {
     @Test
