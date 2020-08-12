@@ -2,7 +2,7 @@ package com.github.jameshnsears.brexitsoundboard.sound
 
 import android.app.Activity
 import android.media.MediaPlayer
-import android.util.Log
+import timber.log.Timber
 
 class MediaPlayerHelper {
     private var mediaPlayer: MediaPlayer? = null
@@ -14,17 +14,17 @@ class MediaPlayerHelper {
                 mediaPlayer!!.release()
             }
         } catch (exception: IllegalStateException) {
-            Log.e("reset", "" + exception.message)
+            Timber.e("" + exception.message)
         }
     }
 
     fun play(activity: Activity?, rawSoundId: Int) {
-        Log.i("play", "playMediaFile")
+        Timber.i("playMediaFile")
         try {
             mediaPlayer = MediaPlayer.create(activity, rawSoundId)
             mediaPlayer?.start()
         } catch (e: Exception) {
-            Log.d("play - Exception:", e.message)
+            Timber.d("" + e.message)
             reset()
             play(activity, rawSoundId)
         }

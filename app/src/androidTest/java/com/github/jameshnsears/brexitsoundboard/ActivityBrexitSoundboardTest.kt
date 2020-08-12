@@ -16,12 +16,12 @@ class ActivityBrexitSoundboardTest {
     @Test
     @UiThreadTest
     fun checkOrderOfButtonImages() {
-        var activeImageId = brexitSoundboardActivity.activity!!.setButtonImage(
+        var activeImageId = brexitSoundboardActivity.activity!!.setNextButtonImage(
                 brexitSoundboardActivity.activity?.activityHomeBinding!!.imageButtonBoris00,
                 brexitSoundboardActivity.activity.buttonIdsBoris)
         Assert.assertEquals(R.id.imageButtonBoris01.toLong(), activeImageId.toLong())
 
-        activeImageId = brexitSoundboardActivity.activity!!.setButtonImage(
+        activeImageId = brexitSoundboardActivity.activity!!.setNextButtonImage(
                 brexitSoundboardActivity.activity?.activityHomeBinding!!.imageButtonBoris08,
                 brexitSoundboardActivity.activity.buttonIdsBoris)
         Assert.assertEquals(R.id.imageButtonBoris00.toLong(), activeImageId.toLong())

@@ -2,7 +2,6 @@ package com.github.jameshnsears.brexitsoundboard.person
 
 import android.app.Activity
 import android.provider.MediaStore
-import android.util.Log
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.KeyEvent
@@ -18,6 +17,7 @@ import com.github.jameshnsears.brexitsoundboard.sound.MediaStoreHelper
 import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper
 import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper.isInstallSoundEnabled
 import com.github.jameshnsears.brexitsoundboard.utils.ToastHelper
+import timber.log.Timber
 
 abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
     private val mapButtonToSound = MapButtonToSound()
@@ -75,7 +75,7 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
     }
 
     private fun soundPlay(rawSoundId: Int, nameOfSound: String) {
-        Log.i("soundPlay", nameOfSound)
+        Timber.i("soundPlay: " + nameOfSound)
 
         auditEvent(AuditEventHelper.Event.SOUND, nameOfSound)
 
@@ -83,7 +83,7 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
         try {
             mediaPlayerHelper.play(this, rawSoundId)
         } catch (exception: NullPointerException) {
-            Log.e("NullPointerException", "" + exception.message)
+            Timber.e("" + exception.message)
         }
     }
 
@@ -95,7 +95,7 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
     }
 
     private fun soundInstall(resourceId: Int, nameOfSound: String, mediaType: String) {
-        Log.d(SharedPreferencesHelper.INSTALL_SOUND, mediaType)
+        Timber.d(SharedPreferencesHelper.INSTALL_SOUND, mediaType)
 
         auditEvent(AuditEventHelper.Event.MEDIA_LIBRARY, "$mediaType:$nameOfSound")
 

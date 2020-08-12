@@ -3,6 +3,7 @@ package com.github.jameshnsears.brexitsoundboard.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.github.jameshnsears.brexitsoundboard.BuildConfig
+import timber.log.Timber
 
 object SharedPreferencesHelper {
     @JvmField
@@ -36,6 +37,8 @@ object SharedPreferencesHelper {
     @JvmStatic
     fun removePriorVersionSharedPreferences(context: Context) {
         if (BuildConfig.VERSION_CODE < 20) {
+            Timber.d("removing prior shared preferences")
+
             val sharedPreferences = getSharedPreferences(context)
             val editor = sharedPreferences.edit()
             editor.clear()

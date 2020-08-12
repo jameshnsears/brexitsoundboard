@@ -13,6 +13,7 @@ import com.github.jameshnsears.brexitsoundboard.utils.ToastHelper.makeToast
 import java.io.File
 import java.io.FileOutputStream
 import org.apache.commons.io.IOUtils
+import timber.log.Timber
 
 class MediaStoreHelper {
     fun installSound(
@@ -41,7 +42,7 @@ class MediaStoreHelper {
 
             makeToast(context, context.getString(R.string.install_menu_confirmation, soundName))
         } catch (e: Exception) {
-            Log.e("Exception", "" + e.message)
+            Timber.e("" + e.message)
         }
     }
 
@@ -51,7 +52,7 @@ class MediaStoreHelper {
             fileFolderDestination.mkdirs()
         }
         val fileDestination = File(fileFolderDestination.absolutePath + "/" + soundName + ".mp3")
-        Log.d("fileDestination", fileFolderDestination.absolutePath)
+        Timber.d(fileFolderDestination.absolutePath)
         return fileDestination
     }
 

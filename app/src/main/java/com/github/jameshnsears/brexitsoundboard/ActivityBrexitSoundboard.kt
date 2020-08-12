@@ -2,11 +2,9 @@ package com.github.jameshnsears.brexitsoundboard
 
 import android.Manifest
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ImageButton
@@ -23,13 +21,17 @@ import com.github.jameshnsears.brexitsoundboard.sound.MediaPlayerHelper
 import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper
 import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper.getSharedPreferences
 import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper.removePriorVersionSharedPreferences
+import com.github.jameshnsears.brexitsoundboard.utils.TimberDebugTree
+import timber.log.Timber
 import java.util.*
+
 
 class ActivityBrexitSoundboard : AppCompatActivity() {
     val buttonIdsBoris: MutableList<Int> = ArrayList()
     private val buttonIdsLiam: MutableList<Int> = ArrayList()
     private val buttonIdsDavid: MutableList<Int> = ArrayList()
     private val buttonIdsTheresa: MutableList<Int> = ArrayList()
+
     private var imageButtonClickedOn: ImageButton? = null
     private var selectedButtonIdBoris = 0
     private var selectedButtonIdLiam = 0
@@ -42,23 +44,40 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     }
 
     var activityHomeBinding: ActivityHomeBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferencesRemovePriorAppVersion()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(TimberDebugTree())
+        }
+
         activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         val view: View = activityHomeBinding!!.root
         setContentView(view)
+
         initAuditing()
         setFooterVersion()
+
         registerClickListenerForInstallSound()
         registerClickListenersForImageButtons()
         registerClickListenerWikipedia()
         registerClickListenerFooter()
+
+        removePriorVersionSharedPreferences(this)
         sharedPreferencesRestore()
     }
 
-    private fun sharedPreferencesRemovePriorAppVersion() {
-        removePriorVersionSharedPreferences(this)
+    // entered from Activity[Person]
+    override fun onResume() {
+        super.onResume()
+
+        mediaPlayerHelper.reset()
+        if (imageButtonClickedOn != null) {
+            setButtonImage(imageButtonClickedOn!!)
+
+            sharedPreferencesSave()
+        }
     }
 
     private fun initAuditing() {
@@ -68,15 +87,6 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     private fun setFooterVersion() {
         activityHomeBinding!!.textViewVersion.text = resources.getString(R.string.footer_version,
                 BuildConfig.VERSION_NAME, BuildConfig.GIT_HASH)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mediaPlayerHelper.reset()
-        if (imageButtonClickedOn != null) {
-            setButtonImage(imageButtonClickedOn!!)
-        }
-        sharedPreferencesRestore()
     }
 
     fun registerClickListenersForImageButtons() {
@@ -138,20 +148,15 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
                             BREXIT_SOUNDBOARD_EXTERNAL_STORAGE)
                 }
             }
-            sharedPreferencesSave()
+            getSharedPreferences(this).edit().putBoolean(SharedPreferencesHelper.INSTALL_SOUND, activityHomeBinding!!.installSound.isChecked)
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         if (requestCode == BREXIT_SOUNDBOARD_EXTERNAL_STORAGE) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // permission given
-                activityHomeBinding!!.installSound.isChecked = true
-            } else {
-                // permission not given
-                activityHomeBinding!!.installSound.isChecked = false
-            }
+            activityHomeBinding!!.installSound.isChecked = grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
             sharedPreferencesSave()
         }
     }
@@ -227,12 +232,11 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
 
     private fun setButtonImage(selectedImageButton: ImageButton) {
         when (determineButtonType(selectedImageButton)) {
-            ButtonType.BORIS -> selectedButtonIdBoris = setButtonImage(selectedImageButton, buttonIdsBoris)
-            ButtonType.LIAM -> selectedButtonIdLiam = setButtonImage(selectedImageButton, buttonIdsLiam)
-            ButtonType.DAVID -> selectedButtonIdDavid = setButtonImage(selectedImageButton, buttonIdsDavid)
-            ButtonType.THERESA -> selectedButtonIdTheresa = setButtonImage(selectedImageButton, buttonIdsTheresa)
+            ButtonType.BORIS -> selectedButtonIdBoris = setNextButtonImage(selectedImageButton, buttonIdsBoris)
+            ButtonType.LIAM -> selectedButtonIdLiam = setNextButtonImage(selectedImageButton, buttonIdsLiam)
+            ButtonType.DAVID -> selectedButtonIdDavid = setNextButtonImage(selectedImageButton, buttonIdsDavid)
+            ButtonType.THERESA -> selectedButtonIdTheresa = setNextButtonImage(selectedImageButton, buttonIdsTheresa)
         }
-        sharedPreferencesSave()
     }
 
     fun determineButtonType(imageButton: ImageButton): ButtonType {
@@ -246,11 +250,12 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         } else {
             ButtonType.THERESA
         }
-        Log.i("determineButtonType", buttonType.toString())
+
+        Timber.i(buttonType.toString())
         return buttonType
     }
 
-    fun setButtonImage(selectedImageButton: ImageButton, buttonIds: List<Int>): Int {
+    fun setNextButtonImage(selectedImageButton: ImageButton, buttonIds: List<Int>): Int {
         for (buttonId in buttonIds) {
             findViewById<View>(buttonId).visibility = View.GONE
         }
@@ -263,48 +268,55 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         return view.id
     }
 
-    private fun sharedPreferencesSave() {
-        val preferences = getSharedPreferences(this).edit()
-        preferences.putBoolean(SharedPreferencesHelper.INSTALL_SOUND, activityHomeBinding!!.installSound.isChecked)
-        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_BORIS, selectedButtonIdBoris)
-        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_LIAM, selectedButtonIdLiam)
-        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_DAVID, selectedButtonIdDavid)
-        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, selectedButtonIdTheresa)
-        preferences.apply()
+    private fun restoreButtonImage(
+            selectedButtonId: Int,
+            buttonIds: List<Int>
+    ) {
+        Timber.d("selectedButtonId=" + selectedButtonId)
+
+        for (buttonId in buttonIds) {
+            findViewById<View>(buttonId).visibility = View.GONE
+        }
+
+        findViewById<View>(selectedButtonId).visibility = View.VISIBLE
     }
 
-    private fun restoreButtonImage(
-        sharedPreferences: SharedPreferences,
-        buttonList: List<Int>,
-        key: String,
-        defaultButtonId: Int
-    ) {
-        for (buttonId in buttonList) {
-            if (buttonId == sharedPreferences.getInt(key, defaultButtonId)) {
-                Log.i(String.format("restoreButtonImage.%s", key), buttonId.toString())
-                findViewById<View>(buttonId).visibility = View.VISIBLE
-            } else {
-                findViewById<View>(buttonId).visibility = View.GONE
-            }
-        }
+    private fun sharedPreferencesSave() {
+        val preferences = getSharedPreferences(this).edit()
+
+        preferences.putBoolean(SharedPreferencesHelper.INSTALL_SOUND, activityHomeBinding!!.installSound.isChecked)
+        Timber.d("installSound=" + activityHomeBinding!!.installSound.isChecked)
+
+        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_BORIS, selectedButtonIdBoris)
+        Timber.d("selectedButtonIdBoris=" + selectedButtonIdBoris)
+
+        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_LIAM, selectedButtonIdLiam)
+        Timber.d("selectedButtonIdLiam=" + selectedButtonIdLiam)
+
+        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_DAVID, selectedButtonIdDavid)
+        Timber.d("selectedButtonIdDavid=" + selectedButtonIdDavid)
+
+        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, selectedButtonIdTheresa)
+        Timber.d("selectedButtonIdTheresa=" + selectedButtonIdTheresa)
+
+        preferences.apply()
     }
 
     private fun sharedPreferencesRestore() {
         val sharedPreferences = getSharedPreferences(this)
         activityHomeBinding!!.installSound.isChecked = sharedPreferences.getBoolean(SharedPreferencesHelper.INSTALL_SOUND, activityHomeBinding!!.installSound.isChecked)
-        restoreButtonImage(sharedPreferences, buttonIdsBoris, SharedPreferencesHelper.SELECTED_BUTTONID_BORIS, activityHomeBinding!!.imageButtonBoris00.id)
-        selectedButtonIdBoris = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_BORIS, activityHomeBinding!!.imageButtonBoris00.id)
-        restoreButtonImage(sharedPreferences, buttonIdsLiam, SharedPreferencesHelper.SELECTED_BUTTONID_LIAM, activityHomeBinding!!.imageButtonLiam00.id)
-        selectedButtonIdLiam = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_LIAM, activityHomeBinding!!.imageButtonLiam00.id)
-        restoreButtonImage(sharedPreferences, buttonIdsDavid, SharedPreferencesHelper.SELECTED_BUTTONID_DAVID, activityHomeBinding!!.imageButtonDavid00.id)
-        selectedButtonIdDavid = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_DAVID, activityHomeBinding!!.imageButtonDavid00.id)
-        restoreButtonImage(sharedPreferences, buttonIdsTheresa, SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, activityHomeBinding!!.imageButtonTheresa00.id)
-        selectedButtonIdTheresa = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, activityHomeBinding!!.imageButtonTheresa00.id)
-    }
 
-    public override fun onDestroy() {
-        mediaPlayerHelper.reset()
-        super.onDestroy()
+        selectedButtonIdBoris = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_BORIS, activityHomeBinding!!.imageButtonBoris00.id)
+        restoreButtonImage(selectedButtonIdBoris, buttonIdsBoris)
+
+        selectedButtonIdLiam = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_LIAM, activityHomeBinding!!.imageButtonLiam00.id)
+        restoreButtonImage(selectedButtonIdLiam, buttonIdsLiam)
+
+        selectedButtonIdDavid = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_DAVID, activityHomeBinding!!.imageButtonDavid00.id)
+        restoreButtonImage(selectedButtonIdDavid, buttonIdsDavid)
+
+        selectedButtonIdTheresa = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, activityHomeBinding!!.imageButtonTheresa00.id)
+        restoreButtonImage(selectedButtonIdTheresa, buttonIdsTheresa)
     }
 
     companion object {
