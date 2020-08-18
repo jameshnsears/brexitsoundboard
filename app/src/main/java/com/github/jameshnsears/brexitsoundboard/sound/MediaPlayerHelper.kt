@@ -14,7 +14,7 @@ class MediaPlayerHelper {
                 mediaPlayer!!.release()
             }
         } catch (exception: IllegalStateException) {
-            Timber.e("" + exception.message)
+            Timber.e(String.format("%s", exception.message))
         }
     }
 
@@ -24,7 +24,7 @@ class MediaPlayerHelper {
             mediaPlayer = MediaPlayer.create(activity, rawSoundId)
             mediaPlayer?.start()
         } catch (e: Exception) {
-            Timber.d("" + e.message)
+            Timber.d(String.format("%s", e.message))
             reset()
             play(activity, rawSoundId)
         }

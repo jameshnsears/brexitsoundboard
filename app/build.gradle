@@ -1,104 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'pmd'
-apply plugin: 'jacoco'
-apply plugin: 'org.sonarqube'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: "io.gitlab.arturbosch.detekt"
-apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: '../ktlint.gradle'
+apply from: '../detekt.gradle'
+apply from: '../jacoco.gradle'
+apply from: '../coveralls.gradle'
+apply from: '../sonarqube.gradle'
 
-task pmd(type: Pmd) {
-    ignoreFailures = true
-    consoleOutput = true
-
-    ruleSetFiles = files("${project.rootDir}/pmd-rules.xml")
-
-    source 'src'
-    include '**/*.java'
-    reports {
-        xml.enabled = true
-        xml.destination = file("$project.buildDir/reports/pmd-results.xml")
-        html.enabled = true
-        html.destination = file("$project.buildDir/reports/pmd-results.html")
-    }
-}
-
-jacoco {
-    toolVersion = '0.8.5'
-}
-
-// , dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
-task jacocoReport(type: JacocoReport) {
-    reports {
-        xml {
-            enabled true
-            destination file("$project.buildDir/reports/jacoco-combined.xml")
-        }
-        html {
-            enabled true
-            destination file("$project.buildDir/reports/jacoco")
-        }
-    }
-
-    def excludes = [
-            '**/R.class',
-            '**/R$*.class'
-    ]
-
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: excludes)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    getSourceDirectories().from(files([mainSrc]))
-    getClassDirectories().from(files([debugTree]))
-    getExecutionData().from(fileTree(dir: "$buildDir", includes:
-            ["jacoco/testDebugUnitTest.exec",
-             "outputs/code_coverage/debugAndroidTest/connected/*.ec"
-            ]))
-}
-
-coveralls {
-    jacocoReportPath 'build/reports/jacoco-combined.xml'
-}
-
-sonarqube {
-    properties {
-        def props = new Properties()
-        file("sonar-project.properties").withInputStream { props.load(it) }
-        props.each {
-            property("${it.key}", "${it.value}")
-        }
-    }
-}
 
 task espresso(type: Exec) {
     commandLine 'adb', 'shell', 'settings', 'put', 'global', 'window_animation_scale', '0'
     commandLine 'adb', 'shell', 'settings', 'put', 'global', 'transition_animation_scale', '0'
     commandLine 'adb', 'shell', 'settings', 'put', 'global', 'animator_duration_scale', '0'
-}
-
-detekt {
-    detekt {
-        debug = true
-        ignoreFailures = false
-        failFast = false // fail build on any finding
-        buildUponDefaultConfig = true // preconfigure defaults
-        config = files("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
-        parallel = true
-        reports {
-            html.enabled = true // observe findings in your browser with structure and code snippets
-            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
-            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
-        }
-    }
-
-    ktlint {
-        debug = true
-        ignoreFailures = true
-        coloredOutput = false
-    }
 }
 
 android {
@@ -111,24 +26,10 @@ android {
         versionName '1.1.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        "room.schemaLocation": "$projectDir/schemas".toString(),
-                        "room.incremental": "true"
-                ]
-            }
-        }
     }
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-
-    testOptions {
-        unitTests.returnDefaultValues = true
-        animationsDisabled = true
     }
 
     lintOptions {
@@ -178,8 +79,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility "1.8"
-        targetCompatibility "1.8"
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildFeatures {
@@ -191,6 +92,7 @@ android {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
+            animationsDisabled = true
             all {
                jacoco {
                     includeNoLocationClasses = true
@@ -221,9 +123,11 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
     implementation 'commons-io:commons-io:2.6'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'androidx.test:core:1.2.0'
     testImplementation "io.mockk:mockk:1.10.0"
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.mockito:mockito-core:3.4.6'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
 }
 
 repositories {

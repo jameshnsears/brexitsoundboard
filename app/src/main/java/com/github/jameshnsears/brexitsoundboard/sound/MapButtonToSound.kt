@@ -96,7 +96,7 @@ class MapButtonToSound {
         buttonIdToSoundIdMap[R.id.buttonTheresaRedWhiteAndBlueBrexit] = R.raw.theresa_sound_red_white_and_blue_brexit
         buttonIdToSoundIdMap[R.id.buttonTheresaStrongAndStableLeadership] = R.raw.theresa_sound_strong_and_stable_leadership
         buttonIdToSoundIdMap[R.id.buttonTheresAPlan] = R.raw.theresa_sound_a_plan_for_britain
-        buttonIdToSoundIdMap[R.id.buttonTheresaCertainityAndClarity] = R.raw.theresa_sound_certainty_and_clarity
+        buttonIdToSoundIdMap[R.id.buttonTheresaCertaintyAndClarity] = R.raw.theresa_sound_certainty_and_clarity
         buttonIdToSoundIdMap[R.id.buttonTheresaWeShouldStayInTheEu] = R.raw.theresa_sound_we_should_stay_inside_eu
         buttonIdToSoundIdMap[R.id.buttonTheresaNIisPartOfTheUK] = R.raw.theresa_sound_ni_is_part_of_the_uk
         buttonIdToSoundIdMap[R.id.buttonTheresaIWillNeverAgreeTo] = R.raw.theresa_sound_something_i_will_never_agree_to

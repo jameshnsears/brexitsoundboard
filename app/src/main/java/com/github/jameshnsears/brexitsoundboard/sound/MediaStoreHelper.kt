@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.util.TypedValue
 import com.github.jameshnsears.brexitsoundboard.R
 import com.github.jameshnsears.brexitsoundboard.utils.ToastHelper.makeToast
@@ -37,12 +36,13 @@ class MediaStoreHelper {
             inputStream.close()
 
             contentResolver.insert(
-                    MediaStore.Audio.Media.getContentUriForPath(fileDestination.absolutePath),
-                    getContentValues(soundName, mediaType, fileDestination))
+                MediaStore.Audio.Media.getContentUriForPath(fileDestination.absolutePath),
+                getContentValues(soundName, mediaType, fileDestination)
+            )
 
             makeToast(context, context.getString(R.string.install_menu_confirmation, soundName))
         } catch (e: Exception) {
-            Timber.e("" + e.message)
+            Timber.e(String.format("", e.message))
         }
     }
 

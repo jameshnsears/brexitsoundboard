@@ -50,21 +50,21 @@ jobs:
           set -x
           bash <(curl -s https://codecov.io/bash)
 
-      - name: static analysis I
+      - name: static analysis - ktlint
         run: |
           set -x
-          # ./gradlew ktlineformat
-          ./gradlew ktlintCheck
+          ./gradlew ktlint
 
-      - name: static analysis II
+      - name: static analysis - detekt
         run: |
           set -x
+          # ./gradlew detektBaseline
           ./gradlew detekt
 
-      - name: static analysis III
+      - name: static analysis - lint
         run: |
           set -x
-          ./gradlew lint pmd
+          ./gradlew lint
 
       - name: sonarcloud
         env:

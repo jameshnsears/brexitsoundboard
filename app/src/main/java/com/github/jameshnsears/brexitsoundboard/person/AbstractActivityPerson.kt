@@ -1,6 +1,5 @@
 package com.github.jameshnsears.brexitsoundboard.person
 
-import android.app.Activity
 import android.provider.MediaStore
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
@@ -8,6 +7,7 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.github.jameshnsears.brexitsoundboard.R
 import com.github.jameshnsears.brexitsoundboard.audit.AuditEventHelper
 import com.github.jameshnsears.brexitsoundboard.audit.AuditEventHelper.Companion.auditEvent
@@ -19,7 +19,7 @@ import com.github.jameshnsears.brexitsoundboard.utils.SharedPreferencesHelper.is
 import com.github.jameshnsears.brexitsoundboard.utils.ToastHelper
 import timber.log.Timber
 
-abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
+abstract class AbstractActivityPerson : AppCompatActivity(), View.OnClickListener {
     private val mapButtonToSound = MapButtonToSound()
 
     private val mediaPlayerHelper = MediaPlayerHelper()
@@ -64,8 +64,8 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         soundPlay(
-                mapButtonToSound.buttonIdToSoundIdMap[view.id]!!,
-                findViewById<Button>(view.id).text.toString()
+            mapButtonToSound.buttonIdToSoundIdMap[view.id]!!,
+            findViewById<Button>(view.id).text.toString()
         )
     }
 
@@ -75,7 +75,7 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
     }
 
     private fun soundPlay(rawSoundId: Int, nameOfSound: String) {
-        Timber.i("soundPlay: " + nameOfSound)
+        Timber.i(String.format("soundPlay: %s", nameOfSound))
 
         auditEvent(AuditEventHelper.Event.SOUND, nameOfSound)
 
@@ -83,7 +83,7 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
         try {
             mediaPlayerHelper.play(this, rawSoundId)
         } catch (exception: NullPointerException) {
-            Timber.e("" + exception.message)
+            Timber.e(String.format("%s", exception.message))
         }
     }
 
@@ -100,9 +100,10 @@ abstract class AbstractActivityPerson : Activity(), View.OnClickListener {
         auditEvent(AuditEventHelper.Event.MEDIA_LIBRARY, "$mediaType:$nameOfSound")
 
         mediaStoreHelper.installSound(
-                resources,
-                baseContext,
-                contentResolver,
-                resourceId, nameOfSound, mediaType)
+            resources,
+            baseContext,
+            contentResolver,
+            resourceId, nameOfSound, mediaType
+        )
     }
 }

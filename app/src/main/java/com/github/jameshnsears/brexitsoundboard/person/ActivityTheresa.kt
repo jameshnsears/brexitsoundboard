@@ -9,7 +9,7 @@ class ActivityTheresa : AbstractActivityPerson() {
         setContentView(R.layout.activity_theresa)
         registerClickListener(R.id.buttonTheresAPlan)
         registerClickListener(R.id.buttonTheresaBrexitMeansBrexit)
-        registerClickListener(R.id.buttonTheresaCertainityAndClarity)
+        registerClickListener(R.id.buttonTheresaCertaintyAndClarity)
         registerClickListener(R.id.buttonTheresaNoDealBetterThanABadDeal)
         registerClickListener(R.id.buttonTheresaNoNeedForAnElection)
         registerClickListener(R.id.buttonTheresaRedWhiteAndBlueBrexit)
