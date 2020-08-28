@@ -4,6 +4,7 @@ import com.github.jameshnsears.brexitsoundboard.person.ActivityDavid
 import com.github.jameshnsears.brexitsoundboard.person.ActivityLiam
 import com.github.jameshnsears.brexitsoundboard.person.ActivityTheresa
 import kotlinx.android.synthetic.main.activity_david.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_liam.*
 import kotlinx.android.synthetic.main.activity_theresa.*
 import org.junit.Assert
@@ -51,5 +52,20 @@ class ActivityBrexitSoundboardRobolectricTest {
         controller.start()
 
         controller.get().onClick(controller.get().buttonTheresAPlan)
+    }
+
+    @Test
+    fun clickOnLinks() {
+        val controller = Robolectric.buildActivity(ActivityBrexitSoundboard::class.java).create()
+        controller.start()
+
+        controller.get().activityHomeBinding!!.textViewNameBoris.performClick()
+        controller.get().activityHomeBinding!!.textViewNameLiam.performClick()
+        controller.get().activityHomeBinding!!.textViewNameDavid.performClick()
+        controller.get().activityHomeBinding!!.textViewNameTheresa.performClick()
+
+        controller.get().activityHomeBinding!!.imageButtonSuggestionBox.performClick()
+
+        controller.get().activityHomeBinding!!.textViewVersion.performClick()
     }
 }
