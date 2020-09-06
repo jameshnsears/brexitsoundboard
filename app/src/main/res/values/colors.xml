@@ -3,4 +3,6 @@
     <color name="colorRed">#cf142b</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlue">#00247d</color>
+    <color name="colorGrey">#FFBEBEBE</color>
+    <color name="colorLightGrey">#A1BEBEBE</color>
 </resources>
