@@ -295,11 +295,13 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     ) {
         Timber.d(String.format("selectedButtonId=%s", selectedButtonId))
 
-        for (buttonId in buttonIds) {
-            findViewById<View>(buttonId).visibility = View.GONE
-        }
+        if (buttonIds.contains(selectedButtonId)) {
+            for (buttonId in buttonIds) {
+                findViewById<View>(buttonId).visibility = View.GONE
+            }
 
-        findViewById<View>(selectedButtonId).visibility = View.VISIBLE
+            findViewById<View>(selectedButtonId).visibility = View.VISIBLE
+        }
     }
 
     private fun sharedPreferencesSave() {
