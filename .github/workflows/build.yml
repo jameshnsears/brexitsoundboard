@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [29]
+        api-level: [23, 29]
 
     steps:
       - name: checkout
@@ -18,12 +18,14 @@ jobs:
           fetch-depth: 0
 
       - name: prep env.
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
         run: |
           set -x
           pwd
           touch local.properties
-          echo "$GOOGLE_SERVICES" | base64 --decode > app/google-services.json
-          ls -al
+          echo "${GOOGLE_SERVICES}" | base64 -d > app/google-services.json
+          ls -al app
 
       - name: test + androidTest
         uses: reactivecircus/android-emulator-runner@v2
@@ -50,11 +52,11 @@ jobs:
           set -x
           bash <(curl -s https://codecov.io/bash)
 
-      - name: static analysis - ktlint
-        run: |
-          set -x
-          # ./gradlew ktlintformat
-          ./gradlew ktlint
+#      - name: static analysis - ktlint
+#        run: |
+#          set -x
+#          # ./gradlew ktlintformat
+#          ./gradlew ktlint
 
       - name: static analysis - detekt
         run: |
@@ -66,11 +68,3 @@ jobs:
         run: |
           set -x
           ./gradlew lint
-
-      - name: sonarcloud
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -x
-          ./gradlew sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.login="$SONAR_TOKEN" --stacktrace

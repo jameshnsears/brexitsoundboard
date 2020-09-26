@@ -8,7 +8,6 @@ class MapButtonToSoundDavidTest : AbstractMapButtonToSound() {
     fun ensureButtonsPlayCorrectSounds() {
         keyValueMap[R.id.buttonDavidAgreementWillFavourTheEU] = R.raw.david_sound_agreement_will_favour_the_eu
         keyValueMap[R.id.buttonDavidConfidentOfAGoodOutcome] = R.raw.david_sound_confident_of_a_good_outcome
-        keyValueMap[R.id.buttonDavidConstructiveAmbiguity] = R.raw.david_sound_constructive_ambiguity
         keyValueMap[R.id.buttonDavidDifficultToReadWhatWeIntend] = R.raw.david_sound_difficult_to_read_what_we_intend
         keyValueMap[R.id.buttonDavidFollowUs] = R.raw.david_sound_follow_us
         keyValueMap[R.id.buttonDavidIRuleNothingInNothingOut] = R.raw.david_sound_i_rule_nothing_in_nothing_out
@@ -16,7 +15,6 @@ class MapButtonToSoundDavidTest : AbstractMapButtonToSound() {
         keyValueMap[R.id.buttonDavidItsGoingIncrediblyWell] = R.raw.david_sound_its_going_incredibly_well
         keyValueMap[R.id.buttonDavidNobodyPretendedThisWillBeSimpleOrEasy] = R.raw.david_sound_nobody_pretended_this_will_be_simple_or_easy
         keyValueMap[R.id.buttonDavidVeryGoodLawyers] = R.raw.david_sound_very_good_lawyers
-        keyValueMap[R.id.buttonDavidIAmCalmNotClever] = R.raw.david_sound_i_am_calm_not_clever
         keyValueMap[R.id.buttonDavidSectorialAnalysis] = R.raw.david_sound_sectorial_analysis
         keyValueMap[R.id.buttonDavidOnlyLastTwoMonthsMatter] = R.raw.david_sound_only_last_two_months_matter
         keyValueMap[R.id.buttonDavidTheRiskIsWorthIt] = R.raw.david_sound_the_risk_is_worth_it

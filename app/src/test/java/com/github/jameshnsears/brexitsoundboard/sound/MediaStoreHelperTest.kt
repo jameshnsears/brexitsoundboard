@@ -10,7 +10,7 @@ class MediaStoreHelperTest {
     fun getContentValues() {
         val mediaStoreHelper = spyk(MediaStoreHelper())
 
-        every { mediaStoreHelper.getfileFolderDestination() } returns File("/")
+        every { mediaStoreHelper.getFileFolderDestination() } returns File("/")
         assert(mediaStoreHelper.getFileDestination("350 Million Pounds A Week") == File("/350 Million Pounds A Week.mp3"))
     }
 }

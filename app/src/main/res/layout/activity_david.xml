@@ -54,15 +54,6 @@
                 android:text="@string/button_david_TheRiskIsWorthIt" />
 
             <Button
-                android:id="@+id/buttonDavidIAmCalmNotClever"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_david_IamCalmButNotClever" />
-
-            <Button
                 android:id="@+id/buttonDavidIRuleNothingInNothingOut"
                 android:textColor="@color/colorRed"
                 android:layout_width="match_parent"
@@ -79,15 +70,6 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/corners_buttons"
                 android:text="@string/button_david_DifficultToReadWhatWeIntend" />
-
-            <Button
-                android:id="@+id/buttonDavidConstructiveAmbiguity"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_david_ConstructiveAmbiguity" />
 
             <Button
                 android:id="@+id/buttonDavidItsGoingIncrediblyWell"
@@ -153,15 +135,6 @@
                 android:text="@string/button_david_FollowUs" />
 
             <Button
-                android:id="@+id/buttonDavidAgreementWillFavourTheEU"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_david_AgreementWillFavourTheEU" />
-
-            <Button
                 android:id="@+id/buttonDavidDamageWorseForEurope"
                 android:textColor="@color/colorRed"
                 android:layout_width="match_parent"
@@ -169,6 +142,15 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/corners_buttons"
                 android:text="@string/button_david_DamageWorseForEurope" />
+
+            <Button
+                android:id="@+id/buttonDavidAgreementWillFavourTheEU"
+                android:textColor="@color/colorRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/corners_buttons"
+                android:text="@string/button_david_AgreementWillFavourTheEU" />
 
             <Button
                 android:id="@+id/buttonDavidTrumpMoment"

@@ -9,10 +9,10 @@ import org.junit.Test
 
 class ToastHelperTest {
     @Test
-    fun toastHelperTest() {
+    fun makeToast() {
         mockkObject(ToastHelper)
 
-        var mockToast = mockk<Toast>()
+        val mockToast = mockk<Toast>()
         every { mockToast.cancel() } returns Unit
         every { mockToast.show() } returns Unit
 

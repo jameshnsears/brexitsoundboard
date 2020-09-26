@@ -14,16 +14,13 @@ class MapButtonToSoundLiamTest : AbstractMapButtonToSound() {
         keyValueMap[R.id.buttonLiamTooLazyAndTooFat] = R.raw.liam_sound_too_lazy_and_too_fat
         keyValueMap[R.id.buttonLiamWeCantBeBlackmailed] = R.raw.liam_sound_we_cant_be_blackmailed
         keyValueMap[R.id.buttonLiamSelfDefeating] = R.raw.liam_sound_self_defeating_pessimist
-        keyValueMap[R.id.buttonLiamIwantGovernmentsDeal] = R.raw.laim_sound_i_want_governments_deal
         keyValueMap[R.id.buttonLiamFullConfidenceInPM] = R.raw.liam_sound_full_confidence_in_pm
         keyValueMap[R.id.buttonLiamOldMenOfBrussels] = R.raw.liam_sound_old_men_of_brussels
         keyValueMap[R.id.buttonLiamRuleTakersSellout] = R.raw.liam_sound_rule_takers_sellout
         keyValueMap[R.id.buttonLiamShockTherapyRequiredForEu] = R.raw.liam_sound_shock_therapy_required_for_eu
         keyValueMap[R.id.buttonLiamStealingBrexit] = R.raw.liam_sound_stealing_brexit
         keyValueMap[R.id.buttonLiamAccessToEu] = R.raw.liam_sound_we_have_to_maintain_access_to_eu
-        keyValueMap[R.id.buttonLiamQuiteIrresponsible] = R.raw.liam_sound_quite_irresponsible
         keyValueMap[R.id.buttonLiamThinkOfTheConsequences] = R.raw.liam_sound_think_of_the_political_consequences
-        keyValueMap[R.id.buttonLiamPotentially] = R.raw.liam_sound_potentially_all_things_are_possible
 
         assertKeyValueMatch()
     }

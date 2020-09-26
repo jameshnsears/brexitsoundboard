@@ -15,6 +15,7 @@ import com.github.jameshnsears.brexitsoundboard.audit.AuditEventHelper.Companion
 import com.github.jameshnsears.brexitsoundboard.databinding.ActivityHomeBinding
 import com.github.jameshnsears.brexitsoundboard.person.ActivityBoris
 import com.github.jameshnsears.brexitsoundboard.person.ActivityDavid
+import com.github.jameshnsears.brexitsoundboard.person.ActivityJacob
 import com.github.jameshnsears.brexitsoundboard.person.ActivityLiam
 import com.github.jameshnsears.brexitsoundboard.person.ActivityTheresa
 import com.github.jameshnsears.brexitsoundboard.sound.MediaPlayerHelper
@@ -28,19 +29,25 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
     private val buttonIdsLiam: MutableList<Int> = ArrayList()
     private val buttonIdsDavid: MutableList<Int> = ArrayList()
     val buttonIdsTheresa: MutableList<Int> = ArrayList()
+    private val buttonIdsJacob: MutableList<Int> = ArrayList()
 
     private var imageButtonClickedOn: ImageButton? = null
     private var selectedButtonIdBoris = 0
     private var selectedButtonIdLiam = 0
     private var selectedButtonIdDavid = 0
     private var selectedButtonIdTheresa = 0
+    private var selectedButtonIdJacob = 0
     private val mediaPlayerHelper = MediaPlayerHelper()
 
     enum class ButtonType {
-        BORIS, LIAM, DAVID, THERESA
+        BORIS, LIAM, DAVID, THERESA, JACOB
     }
 
     var activityHomeBinding: ActivityHomeBinding? = null
+
+    fun sharedPreferencesEmpty() {
+        getSharedPreferences(this).edit().clear().commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +100,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         registerButtonDavid()
         registerButtonLiam()
         registerButtonTheresa()
+        registerButtonJacob()
         registerButtonSuggestionBox()
     }
 
@@ -106,6 +114,8 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         buttonIdsBoris.add(activityHomeBinding!!.imageButtonBoris06.id)
         buttonIdsBoris.add(activityHomeBinding!!.imageButtonBoris07.id)
         buttonIdsBoris.add(activityHomeBinding!!.imageButtonBoris08.id)
+        buttonIdsBoris.add(activityHomeBinding!!.imageButtonBoris09.id)
+        buttonIdsBoris.add(activityHomeBinding!!.imageButtonBoris10.id)
         registerClickListenersForButtonIds(buttonIdsBoris, ActivityBoris::class.java)
         selectedButtonIdBoris = activityHomeBinding!!.imageButtonBoris00.id
     }
@@ -116,6 +126,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         buttonIdsLiam.add(activityHomeBinding!!.imageButtonLiam02.id)
         buttonIdsLiam.add(activityHomeBinding!!.imageButtonLiam03.id)
         buttonIdsLiam.add(activityHomeBinding!!.imageButtonLiam04.id)
+        buttonIdsLiam.add(activityHomeBinding!!.imageButtonLiam05.id)
         registerClickListenersForButtonIds(buttonIdsLiam, ActivityLiam::class.java)
         selectedButtonIdLiam = activityHomeBinding!!.imageButtonLiam00.id
     }
@@ -139,9 +150,18 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         selectedButtonIdTheresa = activityHomeBinding!!.imageButtonTheresa00.id
     }
 
+    private fun registerButtonJacob() {
+        buttonIdsJacob.add(activityHomeBinding!!.imageButtonMogg00.id)
+        buttonIdsJacob.add(activityHomeBinding!!.imageButtonMogg01.id)
+        buttonIdsJacob.add(activityHomeBinding!!.imageButtonMogg02.id)
+        registerClickListenersForButtonIds(buttonIdsJacob, ActivityJacob::class.java)
+        selectedButtonIdJacob = activityHomeBinding!!.imageButtonMogg00.id
+    }
+
     private fun registerClickListenerForInstallSound() {
         activityHomeBinding!!.installSound.setOnCheckedChangeListener { _: CompoundButton?, _: Boolean ->
-            if (activityHomeBinding!!.installSound.isChecked && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (activityHomeBinding!!.installSound.isChecked && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
                     BREXIT_SOUNDBOARD_EXTERNAL_STORAGE
@@ -150,7 +170,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
 
             with(getSharedPreferences(this).edit()) {
                 putBoolean(SharedPreferencesHelper.INSTALL_SOUND, activityHomeBinding!!.installSound.isChecked)
-                commit()
+                apply()
             }
         }
     }
@@ -159,7 +179,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == BREXIT_SOUNDBOARD_EXTERNAL_STORAGE) {
-            activityHomeBinding!!.installSound.isChecked = grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            activityHomeBinding!!.installSound.isChecked = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             sharedPreferencesSave()
         }
     }
@@ -208,6 +228,14 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
                 )
             )
         }
+        activityHomeBinding!!.textViewNameJacob.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://en.wikipedia.org/wiki/Jacob_Rees-Mogg")
+                )
+            )
+        }
     }
 
     private fun registerClickListenerFooter() {
@@ -253,6 +281,7 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
             ButtonType.LIAM -> selectedButtonIdLiam = setNextButtonImage(selectedImageButton, buttonIdsLiam)
             ButtonType.DAVID -> selectedButtonIdDavid = setNextButtonImage(selectedImageButton, buttonIdsDavid)
             ButtonType.THERESA -> selectedButtonIdTheresa = setNextButtonImage(selectedImageButton, buttonIdsTheresa)
+            ButtonType.JACOB -> selectedButtonIdJacob = setNextButtonImage(selectedImageButton, buttonIdsJacob)
         }
     }
 
@@ -267,8 +296,11 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
             buttonIdsDavid.contains(imageButton.id) -> {
                 ButtonType.DAVID
             }
-            else -> {
+            buttonIdsTheresa.contains(imageButton.id) -> {
                 ButtonType.THERESA
+            }
+            else -> {
+                ButtonType.JACOB
             }
         }
 
@@ -293,8 +325,6 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         selectedButtonId: Int,
         buttonIds: List<Int>
     ) {
-        Timber.d(String.format("selectedButtonId=%s", selectedButtonId))
-
         if (buttonIds.contains(selectedButtonId)) {
             for (buttonId in buttonIds) {
                 findViewById<View>(buttonId).visibility = View.GONE
@@ -322,6 +352,9 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
         preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, selectedButtonIdTheresa)
         Timber.d(String.format("selectedButtonIdTheresa=%d", selectedButtonIdTheresa))
 
+        preferences.putInt(SharedPreferencesHelper.SELECTED_BUTTONID_JACOB, selectedButtonIdJacob)
+        Timber.d(String.format("selectedButtonIdJacob=%d", selectedButtonIdJacob))
+
         preferences.apply()
     }
 
@@ -340,6 +373,9 @@ class ActivityBrexitSoundboard : AppCompatActivity() {
 
         selectedButtonIdTheresa = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_THERESA, activityHomeBinding!!.imageButtonTheresa00.id)
         restoreButtonImage(selectedButtonIdTheresa, buttonIdsTheresa)
+
+        selectedButtonIdJacob = sharedPreferences.getInt(SharedPreferencesHelper.SELECTED_BUTTONID_JACOB, activityHomeBinding!!.imageButtonMogg00.id)
+        restoreButtonImage(selectedButtonIdJacob, buttonIdsJacob)
     }
 
     companion object {

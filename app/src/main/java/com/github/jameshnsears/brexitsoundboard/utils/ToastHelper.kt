@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 
 object ToastHelper {
-    var toast: Toast? = null
+    private var toast: Toast? = null
 
     fun makeToast(context: Context, message: String) {
         if (toast != null) {

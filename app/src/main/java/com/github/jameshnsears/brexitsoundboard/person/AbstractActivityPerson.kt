@@ -75,7 +75,7 @@ abstract class AbstractActivityPerson : AppCompatActivity(), View.OnClickListene
     }
 
     private fun soundPlay(rawSoundId: Int, nameOfSound: String) {
-        Timber.d(String.format("soundPlay: %s", nameOfSound))
+        Timber.d(nameOfSound)
 
         auditEvent(AuditEventHelper.Event.SOUND, nameOfSound)
 

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center_vertical|center_horizontal"
@@ -148,6 +147,26 @@
                     android:visibility="gone"
                     app:srcCompat="@drawable/boris08" />
 
+                <ImageButton
+                    android:id="@+id/imageButtonBoris09"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_boris"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/boris09" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonBoris10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_boris"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/boris10" />
+
                 <TextView
                     android:id="@+id/textViewNameBoris"
                     android:layout_width="match_parent"
@@ -213,6 +232,16 @@
                     android:contentDescription="@string/button_liam"
                     android:visibility="gone"
                     app:srcCompat="@drawable/liam04" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonLiam05"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_liam"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/liam05" />
 
                 <TextView
                     android:id="@+id/textViewNameLiam"
@@ -354,6 +383,52 @@
                 android:layout_marginTop="10dp">
 
                 <ImageButton
+                    android:id="@+id/imageButtonMogg00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_theresa"
+                    app:srcCompat="@drawable/mogg00" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonMogg01"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_theresa"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/mogg01" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonMogg02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_buttons"
+                    android:contentDescription="@string/button_theresa"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/mogg02" />
+
+                <TextView
+                    android:id="@+id/textViewNameJacob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/button_jacob"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
                     android:id="@+id/imageButtonSuggestionBox"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -365,7 +440,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutFooter"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
@@ -380,7 +454,6 @@
                     android:textColor="@color/colorBlue" />
 
                 <LinearLayout
-                    android:id="@+id/layoutFooter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

@@ -126,15 +126,6 @@
                 android:text="@string/button_liam_NotHavingADealWouldBeBad" />
 
             <Button
-                android:id="@+id/buttonLiamIwantGovernmentsDeal"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_liam_IWantTheGovernmentsDeal" />
-
-            <Button
                 android:id="@+id/buttonLiamFullConfidenceInPM"
                 android:textColor="@color/colorRed"
                 android:layout_width="match_parent"
@@ -171,32 +162,15 @@
                 android:text="@string/button_liam_WeCantBeBlackmailed" />
 
             <Button
-                android:id="@+id/buttonLiamQuiteIrresponsible"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_liam_QuiteIrresponsible" />
-
-            <Button
                 android:id="@+id/buttonLiamThinkOfTheConsequences"
-                android:textColor="@color/colorRed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/corners_buttons"
-                android:text="@string/button_liam_ThinkOfTheConsequences" />
-
-            <Button
-                android:id="@+id/buttonLiamPotentially"
                 android:textColor="@color/colorRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/corners_buttons"
-                android:text="@string/button_liam_Potentially" />
+                android:text="@string/button_liam_ThinkOfTheConsequences" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

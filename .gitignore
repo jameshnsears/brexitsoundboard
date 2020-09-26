@@ -1,3 +1,7 @@
+/app/build/
+/app/google-services.json
+/app/keystore.jks
+/app/release/app-release.aab
 /build
 /captures
 /config/keystore.jks
@@ -11,10 +15,6 @@
 /.idea/libraries
 /.idea/modules.xml
 /.idea/navEditor.xml
-/.idea/runConfigurations.xml
-/.idea/sonarlint/
 /.idea/workspace.xml
 *.iml
 /local.properties
-/app/build/
-/app/release/app-release.aab

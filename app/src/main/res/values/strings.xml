@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Brexit Soundboard</string>
 
-    <string name="install_sound">Enable Media Library integration?</string>
+    <string name="install_sound">Enable Media Library integration\?</string>
     <string name="install_menu_alarm">Alarm</string>
     <string name="install_menu_notification">Notification</string>
     <string name="install_menu_ringtone">Ringtone</string>
@@ -11,47 +11,43 @@
     <string name="button_liam">Dr Liam Fox</string>
     <string name="button_david">David Davis</string>
     <string name="button_theresa">Theresa May</string>
+    <string name="button_jacob">Jacob William Rees-Mogg</string>
     <string name="button_suggestion_box">Suggestion Box</string>
 
     <string name="button_boris_350MillionPoundsAWeek">350 Million Pounds A Week</string>
     <string name="button_boris_AllYourOptionsAreGood">All Your Options Are Good</string>
     <string name="button_boris_CostOfGettingOutVirtuallyNil">Cost Of Getting Out Virtually Nil</string>
-    <string name="button_boris_GoWhistle">Go Whistle</string>
     <string name="button_boris_HiggledyPiggledyNations">Higgledy-piggledy Nations</string>
-    <string name="button_boris_PoundIsStable">Pound Is Stable</string>
-    <string name="button_boris_TalkingWithoutDetail">Talking Without Detail</string>
     <string name="button_boris_TigerInTheTank">Tiger In The Tank</string>
     <string name="button_boris_VindicatedByHistory">Vindicated By History</string>
     <string name="button_boris_WeExportTvAerials">We Export Tv Aerials</string>
     <string name="button_boris_WeightLiftedFromBritishBusiness">Weight Lifted From British Business</string>
     <string name="button_boris_WinWinForAllOfUs">Win Win For All Of Us</string>
-    <string name="button_boris_UsaVeryEnthusiasticAboutFreeTradeDeal">USA Enthusiastic About Free Trade</string>
     <string name="button_boris_LittleBenefitFromEU">Little Benefit From EU</string>
-    <string name="button_boris_NotAPlagueOfBoils">A Plague of Boils</string>
     <string name="button_boris_UkShapingTheModernWorld">UK Shaping The Modern world</string>
-    <string name="button_boris_WeWantToBeLessInsular">We Want To Be Less Insular</string>
     <string name="button_boris_BrexitHasNotDamagedCountry">Brexit Has Not Damaged Country</string>
     <string name="button_boris_DoNotUnderestimate">Do Not Underestimate</string>
     <string name="button_boris_AsLongAsItTakes">For As Long As It Takes</string>
     <string name="button_boris_StunningSuccess">Stunning Success</string>
     <string name="button_boris_DeadInADitch">Dead In A Ditch</string>
-    <string name="button_boris_DealIsTouchAndGo">Deal is touch and go</string>
-    <string name="button_boris_DoNotWorryAboutNoDeal">Do not worry about no deal</string>
     <string name="button_boris_FriendsAreABitNegative">Friends are a bit negative</string>
-    <string name="button_boris_GangbustersInSoManyWays">Gangbusters in so many ways</string>
-    <string name="button_boris_IWantAWorld">I want a world</string>
     <string name="button_boris_LetsGetBrexitDone">Lets Get Brexit Done</string>
     <string name="button_boris_NoNIChecks">No NI Checks</string>
     <string name="button_boris_PutItInTheMicrowave">Put it in the microwave</string>
-    <string name="button_boris_ResponsibleHumanBeings">Responsible Human Beings</string>
-    <string name="button_boris_TheFlagIsGoingUp">The Flag is going Up</string>
-    <string name="button_boris_PeopleAreLookingAtUs">People are looking at us</string>
-    <string name="button_boris_WTOisNoProblem">WTO is No Problem</string>
     <string name="button_boris_WeHaveADeal">We have a deal</string>
+    <string name="button_boris_ACakistTreaty">A Cakist Treaty</string>
+    <string name="button_boris_ProsperMightily">We Will Prosper Mightily</string>
+    <string name="button_boris_FantasticDealForAll">Fantastic Deal For All</string>
+    <string name="button_boris_FullControlOfWaters">Full Control of Waters</string>
+    <string name="button_boris_MoreBusinessWithEU">More Business With EU</string>
+    <string name="button_boris_NoNonTariffBarriers">No Non Tariff Barriers</string>
+    <string name="button_boris_SandpaperingTheBarnacles">Sandpapering the Barnacles</string>
+    <string name="button_boris_FacingARealProblem">Facing a Real, Real Problem</string>
+    <string name="button_boris_IgnoreMerchantsOfGloom">Ignore Merchants of Gloom</string>
+
 
     <string name="button_david_AgreementWillFavourTheEU">Agreement Will Favour The EU</string>
     <string name="button_david_ConfidentOfAGoodOutcome">Confident Of A Good Outcome</string>
-    <string name="button_david_ConstructiveAmbiguity">Constructive Ambiguity</string>
     <string name="button_david_DifficultToReadWhatWeIntend">Difficult To Read What We Intend</string>
     <string name="button_david_FollowUs">Follow Us?</string>
     <string name="button_david_IRuleNothingInNothingOut">I Rule Nothing In Nothing Out</string>
@@ -59,7 +55,6 @@
     <string name="button_david_ItsGoingIncrediblyWell">It\'s Going Incredibly Well</string>
     <string name="button_david_NobodyPretendedThisWillBeSimpleOrEasy">Nobody Pretended This Will Be Simple</string>
     <string name="button_david_VeryGoodLawyers">We\'ve Got Very Good Lawyers</string>
-    <string name="button_david_IamCalmButNotClever">I Am Calm Not Clever</string>
     <string name="button_david_SectorialAnalysis">Sectorial Analysis</string>
     <string name="button_david_OnlyLastTwoMonthsMatter">Only Last Two Months Matter</string>
     <string name="button_david_TheRiskIsWorthIt">The Small Risk Is Worth It</string>
@@ -76,16 +71,13 @@
     <string name="button_liam_TooLazyAndTooFat">Too Lazy And Too Fat</string>
     <string name="button_liam_WeCantBeBlackmailed">We Can\'t Be Blackmailed</string>
     <string name="button_liam_SelfDefeatingPessimists">Self Defeating Pessimists</string>
-    <string name="button_liam_IWantTheGovernmentsDeal">I Want The Governments Deal</string>
     <string name="button_liam_FullConfidenceInPM">Full Confidence In PM [TM]</string>
     <string name="button_liam_OldMenOfBrussels">Old Men Of Brussels</string>
     <string name="button_liam_Sellout">Sellout</string>
     <string name="button_liam_ShockTherapyRequiredForEU">Shock Therapy Required For EU</string>
     <string name="button_liam_StealingBrexit">Stealing Brexit</string>
     <string name="button_liam_HaveToMaintainAccessToEU">Have To Maintain Access To EU</string>
-    <string name="button_liam_QuiteIrresponsible">Quite Irresponsible</string>
     <string name="button_liam_ThinkOfTheConsequences">Think of the Political Consequences</string>
-    <string name="button_liam_Potentially">Potentially All Things Are Possible</string>
 
     <string name="button_theresa_BrexitMeansBrexit">Brexit Means Brexit</string>
     <string name="button_theresa_NoDealBetterThanABadDeal">No Deal Better Than A Bad Deal</string>
@@ -98,6 +90,10 @@
     <string name="button_theresa_NIisPartOfTheUK">NI is part of the UK</string>
     <string name="button_theresa_IWillNeverAgreeTo">Something I Will never agree to</string>
     <string name="button_theresa_CitizenOfNowhere">Citizen of Nowhere</string>
+
+    <string name="button_jacob_PerilsOfForecasting">Perils of Forecasting</string>
+    <string name="button_jacob_FiftyYearTimescale">Fifty Year Timescale</string>
+    <string name="button_jacob_HappyBritishFish">Happy British Fish</string>
 
     <string name="footer_version">%s/%s</string>
     <string name="footer_oss">Open Source Software</string>

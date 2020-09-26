@@ -36,7 +36,7 @@ class MediaStoreHelper {
             inputStream.close()
 
             contentResolver.insert(
-                MediaStore.Audio.Media.getContentUriForPath(fileDestination.absolutePath),
+                MediaStore.Audio.Media.getContentUriForPath(fileDestination.absolutePath)!!,
                 getContentValues(soundName, mediaType, fileDestination)
             )
 
@@ -47,7 +47,7 @@ class MediaStoreHelper {
     }
 
     fun getFileDestination(soundName: String): File {
-        val fileFolderDestination = getfileFolderDestination()
+        val fileFolderDestination = getFileFolderDestination()
         if (!fileFolderDestination.exists()) {
             fileFolderDestination.mkdirs()
         }
@@ -56,7 +56,7 @@ class MediaStoreHelper {
         return fileDestination
     }
 
-    fun getfileFolderDestination(): File {
+    fun getFileFolderDestination(): File {
         return File(Environment.getExternalStorageDirectory().absolutePath + "/Music")
     }
 
